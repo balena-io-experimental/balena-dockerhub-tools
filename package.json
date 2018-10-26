@@ -1,0 +1,28 @@
+{
+  "name": "dockerhub-docs",
+  "version": "0.0.1",
+  "description": "Balena dockerhub docs",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:balena-io-library/dockerhub-docs.git"
+  },
+  "scripts": {
+    "lint": "eslint lib test"
+  },
+  "author": "Balena Inc. <hello@balena.io>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "fs-extra": "^0.30.0",
+    "docker-hub-api": "^0.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsdoc": "^3.1.2",
+    "eslint-plugin-lodash": "^2.4.5",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
