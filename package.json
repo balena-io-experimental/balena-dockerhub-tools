@@ -1,19 +1,22 @@
 {
-  "name": "dockerhub-docs",
+  "name": "dockerhub-tools",
   "version": "0.0.1",
-  "description": "Balena dockerhub docs",
+  "description": "Balena dockerhub tools",
   "repository": {
     "type": "git",
-    "url": "git@github.com:balena-io-library/dockerhub-docs.git"
+    "url": "git@github.com:balena-io-library/dockerhub-tools.git"
   },
   "scripts": {
-    "lint": "eslint lib test"
+    "lint": "eslint lib test",
+    "update-resin-warning": "node scripts/update-resin-deprecation.js",
+    "update-balenalib": "node scripts/update-balenalib-dockerhub-descriptions.js"
   },
   "author": "Balena Inc. <hello@balena.io>",
   "license": "Apache-2.0",
   "dependencies": {
     "fs-extra": "^0.30.0",
-    "docker-hub-api": "^0.6.0"
+    "docker-hub-api": "^0.6.0",
+    "handlebars": "^4.0.10"
   },
   "devDependencies": {
     "eslint": "^4.5.0",
