@@ -22,4 +22,4 @@ Before you start to code, we recommend discussing your plans through a [GitHub i
 
 Documentation for this image is stored in the [base images documentation][docs]. Check it out for list of all of our base images including many specialised ones for e.g. node, python, go, smaller images, etc.
 
-[docs]: https://www.balena.io/docs/?ref=dockerhub
+[docs]: https://www.balena.io/docs/reference/base-images/base-images/#balena-base-images?ref=dockerhub
