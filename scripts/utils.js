@@ -40,9 +40,9 @@ exports.setDockerhubDescription = (token, repoInfo) => {
 
   dhAPI.setLoginToken(token)
   dhAPI.setRepositoryDescription(repoInfo.namespace, repoInfo.imageName, repoInfo.descriptions)
-  .then (((info) => {
-    console.log(`${info.user}/${info.name} updated successfully!`)
-  }))
+  //.then (((info) => {
+  //  console.log(`${info.user}/${info.name} updated successfully!`)
+  //}))
   .catch ((error) => {
     console.log(`${repoInfo.imageName} error!`)
   })
