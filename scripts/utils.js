@@ -40,9 +40,12 @@ exports.setDockerhubDescription = (token, repoInfo) => {
 
   dhAPI.setLoginToken(token)
   dhAPI.setRepositoryDescription(repoInfo.namespace, repoInfo.imageName, repoInfo.descriptions)
-  //.then (((info) => {
-  //  console.log(`${info.user}/${info.name} updated successfully!`)
-  //}))
+  .then (((info) => {
+    // If the full description is over 25k characters then it will fail!
+    if (!info.user) {
+      console.log('Over 25k: ' + repoInfo.imageName)
+    }
+  }))
   .catch ((error) => {
     console.log(`Can't set ${repoInfo.imageName}!`)
   })
@@ -73,7 +76,7 @@ exports.getAllRepoTags = (repo) => {
       // line example: `{"tag":"edge-build-20181207","repoDir":"git://github.com/balena-io-library/base-images@03a5733bc082420e3186d3c89e2805923b0ba40b balena-base-images/aarch64/alpine/edge/build","alias":"edge-build-20181207 edge-build"}`
       try {
           var tmpObj = JSON.parse(line)
-          parsedContent[tmpObj.repoDir.split(' ')[1]] = tmpObj.alias.split(' ').map(function(x){ return `\`${x}\`` })
+          parsedContent[tmpObj.repoDir.split(' ')[1]] = tmpObj.alias.split(' ')
       }
       catch (error) {
         console.log(`Error when reading ${repo} library file!`)
@@ -83,7 +86,7 @@ exports.getAllRepoTags = (repo) => {
     let tags = ''
     for (const item of Object.keys(parsedContent)) {
       // something like: `[`jessie`, `latest` (*debian/armv7hf/jessie/Dockerfile*)](https://github.com/balena-io-library/base-images/tree/master/debian/armv7hf/jessie/Dockerfile)`
-      tags += `[${parsedContent[item].join(', ')} (*${item}*)](https://github.com/balena-io-library/base-images/tree/master/${item}/Dockerfile)\n\n`
+      tags += `[${parsedContent[item].join(', ')} (Dockerfile)](https://github.com/balena-io-library/base-images/tree/master/${item}/Dockerfile)\n\n`
     }
     return tags
   }
