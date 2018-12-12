@@ -44,7 +44,7 @@ exports.setDockerhubDescription = (token, repoInfo) => {
   //  console.log(`${info.user}/${info.name} updated successfully!`)
   //}))
   .catch ((error) => {
-    console.log(`${repoInfo.imageName} error!`)
+    console.log(`Can't set ${repoInfo.imageName}!`)
   })
 }
 
@@ -70,9 +70,15 @@ exports.getAllRepoTags = (repo) => {
         // skip comment line
         continue
       }
-      // line example: `edge-build-20181029: git://github.com/balena-io-library/base-images@1d433d7f9167c09038f1476a24ab3c71253229bc balena-base-images/node/aarch64/alpine/edge/10.10.0/build`
-      var tmp = line.split(' ')
-      parsedContent[tmp[2]] = (parsedContent[tmp[2]] ? parsedContent[tmp[2]].concat([`\`${tmp[0].slice(0, -1)}\``]) : [`\`${tmp[0].slice(0, -1)}\``])
+      // line example: `{"tag":"edge-build-20181207","repoDir":"git://github.com/balena-io-library/base-images@03a5733bc082420e3186d3c89e2805923b0ba40b balena-base-images/aarch64/alpine/edge/build","alias":"edge-build-20181207 edge-build"}`
+      try {
+          var tmpObj = JSON.parse(line)
+          parsedContent[tmpObj.repoDir.split(' ')[1]] = tmpObj.alias.split(' ').map(function(x){ return `\`${x}\`` })
+      }
+      catch (error) {
+        console.log(`Error when reading ${repo} library file!`)
+        continue
+      }
     }
     let tags = ''
     for (const item of Object.keys(parsedContent)) {
