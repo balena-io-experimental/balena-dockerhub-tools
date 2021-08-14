@@ -21,6 +21,7 @@ const fs = require('fs-extra')
 const handlebars = require('handlebars')
 const path = require('path')
 const utils = require('./utils')
+const { execSync } = require('child_process');
 
 const BALLENA_LIB_GH_URL = 'https://github.com/balena-io-library/base-images'
 const DOCKERHUB_DESC_URL = 'https://raw.githubusercontent.com/balena-io-library/base-images/master/balena-base-images/docs/dockerhub/'
