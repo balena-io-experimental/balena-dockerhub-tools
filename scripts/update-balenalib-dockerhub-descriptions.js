@@ -26,10 +26,15 @@ const BALLENA_LIB_GH_URL = 'https://github.com/balena-io-library/base-images'
 const DOCKERHUB_DESC_URL = 'https://raw.githubusercontent.com/balena-io-library/base-images/master/balena-base-images/docs/dockerhub/'
 const SHORT_DESCRIPTION = 'This image is part of the balena.io base image series for IoT devices.'
 
-//const DEVICE_LIST = ['raspberry-pi2', 'qemux86-64', 'beaglebone-black', 'intel-nuc', 'via-vab820-quad', 'zynq-xz702', 'odroid-c1', 'odroid-xu4', 'parallella', 'nitrogen6x', 'hummingboard', 'ts4900', 'colibri-imx6dl', 'apalis-imx6q', 'raspberrypi3', 'artik5', 'artik10', 'beaglebone-green-wifi', 'beaglebone-green', 'artik710', 'am571x-evm', 'up-board', 'kitra710', 'imx6ul-var-dart', 'kitra520', 'jetson-tx2', 'jetson-tx1', 'generic-aarch64', 'generic-armv7ahf', 'bananapi-m1-plus', 'orangepi-plus2', 'fincm3', 'artik533s', 'artik530', 'orbitty-tx2', 'spacely-tx2', 'revpi-core-3', 'asus-tinker-board-s', 'asus-tinker-board', 'var-som-mx6', 'nanopi-neo-air', 'imx7-var-som', 'beaglebone-pocket', 'intel-edison', 'qemux86', 'stem-x86-32', 'cybertan-ze250', 'iot2000', 'ts7700', 'raspberry-pi', 'imx8m-var-dart', 'cl-som-imx8']
-const DEVICE_LIST = ['imx8m-var-dart', 'cl-som-imx8']
-const ARCH_LIST = ['armv7hf', 'i386', 'amd64', 'aarch64', 'rpi', 'armv5e', 'i386-nlp']
-const STACK_LIST = ['node', 'python', 'golang', 'openjdk']
+const DEVICE_LIST = ['raspberry-pi2', 'qemux86-64', 'beaglebone-black', 'intel-nuc', 'via-vab820-quad', 'zynq-xz702', 'odroid-c1', 'odroid-xu4', 'parallella', 'nitrogen6x', 'hummingboard', 'ts4900', 'colibri-imx6dl', 'apalis-imx6q', 'raspberrypi3', 'artik5', 'artik10', 'beaglebone-green-wifi', 'beaglebone-green', 'artik710', 'am571x-evm', 'up-board', 'kitra710', 'imx6ul-var-dart', 'kitra520', 'jetson-tx2', 'jetson-tx1', 'generic-aarch64', 'generic-armv7ahf', 'bananapi-m1-plus', 'orangepi-plus2', 'fincm3', 'artik533s', 'artik530', 'orbitty-tx2', 'spacely-tx2', 'revpi-core-3', 'asus-tinker-board-s', 'asus-tinker-board', 'var-som-mx6', 'nanopi-neo-air', 'imx7-var-som', 'beaglebone-pocket', 'intel-edison', 'qemux86', 'stem-x86-32', 'cybertan-ze250', 'iot2000', 'ts7700', 'raspberry-pi', 'imx8m-var-dart', 'cl-som-imx8',
+  'orange-pi-zero','orange-pi-one', 'raspberrypi3-64','npe-x500-m3', 'nitrogen6xq2g', 'n510-tx2', 'jetson-nano', 'dl-pm6x', 'srd3-tx2', 'blackboard-tx2', 'orange-pi-lite', 'surface-pro-6', 'beagleboard-xm', 'nanopc-t4',
+  'jetson-xavier', 'up-core', 'up-core-plus', 'up-squared', 'nitrogen8mm', 'j120-tx2', 'raspberrypi4-64', 'surface-go', 'jn30b-nano', 'coral-dev', 'm2pcie-tx2', 'nitrogen8mm-dwe',
+  'skx2', 'genericx86-64-ext', 'imx8mm-var-dart-plt', 'imx8mm-var-dart-nrt', 'jetson-nano-emmc', 'jetson-xavier-nx-devkit-emmc', 'photon-xavier-nx', 'astro-tx2', 'ccimx8x-sbc-pro', 'raspberrypi400-64', 'beaglebone-green-gateway', 'jetson-xavier-nx-devkit',
+  'jetson-nano-2gb-devkit', 'smarc-px30', 'revpi-connect', 'iot-gate-imx8', 'raspberrypicm4-ioboard', 'floyd-nano', 'aio-3288c', 'firefly-rk3288', 'photon-nano',
+  'generic', 'generic-amd64-fde', 'jetson-xavier-nx-devkit-seeed-2mic-hat', 'rockpi-4b-rk3399', 'asus-tinker-edge-t'
+]
+
+const ARCH_LIST = ['armv7hf', 'i386', 'amd64', 'aarch64', 'rpi']
 
 var devices = DEVICE_LIST.concat(ARCH_LIST)
 var imageNames = ['-debian', '-debian-node', '-debian-python', '-debian-golang', '-debian-openjdk']
@@ -68,10 +73,16 @@ dhAPI.login(dhAccount, dhPassword)
           'full': rawContent
         }
 
-        utils.setDockerhubDescription(info.token, repoInfo)
-        if (repoInfo.stackName.includes('debian')) {
-          repoInfo.imageName = repoInfo.imageName.replace(/-debian/, '')
+        try {
+          console.log(`Update ${repoInfo.imageName}!`)
           utils.setDockerhubDescription(info.token, repoInfo)
+          if (repoInfo.stackName.includes('debian')) {
+            repoInfo.imageName = repoInfo.imageName.replace(/-debian/, '')
+            utils.setDockerhubDescription(info.token, repoInfo)
+          }
+        } catch (e) {
+          console.log(e)
+          continue
         }
       }
     }
